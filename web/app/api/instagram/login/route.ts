@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { randomBytes } from 'crypto';
-import { IgApiClient, IgLoginTwoFactorRequiredError } from 'instagram-private-api';
+import { IgLoginTwoFactorRequiredError } from 'instagram-private-api';
 import { saveFlowState } from '@/lib/session/redis';
+import { createInstagramClient } from '@/lib/instagram/client';
 import { handleLoginError } from '@/lib/instagram/errors';
 
 export const maxDuration = 60;
@@ -18,9 +19,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const ig = new IgApiClient();
-  ig.state.generateDevice(username);
-  ig.state.proxyUrl = process.env.IG_PROXY || '';
+  const ig = createInstagramClient(username);
 
   try {
     await ig.simulate.preLoginFlow();

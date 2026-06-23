@@ -8,7 +8,29 @@ import {
 
 export class ClientMessageError extends Error {}
 
+function logLoginError(error: unknown) {
+  if (error instanceof IgResponseError) {
+    console.warn('[instagram/login] Instagram response error:', {
+      statusCode: error.response.statusCode,
+      message: error.response.body?.message,
+      errorType: error.response.body?.error_type,
+    });
+    return;
+  }
+
+  if (error instanceof Error) {
+    console.warn('[instagram/login] Error:', {
+      name: error.name,
+      message: error.message,
+    });
+    return;
+  }
+
+  console.warn('[instagram/login] Unknown error:', typeof error);
+}
+
 export function handleLoginError(error: unknown): NextResponse {
+  logLoginError(error);
   if (error instanceof IgLoginTwoFactorRequiredError) {
     const info = error.response.body.two_factor_info;
     const verificationMethod = info.totp_two_factor_on ? '0' : '1';

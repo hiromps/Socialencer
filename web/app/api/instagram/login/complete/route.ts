@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { randomBytes } from 'crypto';
-import { IgApiClient } from 'instagram-private-api';
+import { applyIgRuntimeConfig, createInstagramClient } from '@/lib/instagram/client';
 import {
   getFlowState,
   deleteFlowState,
@@ -30,10 +30,9 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const ig = new IgApiClient();
-  ig.state.generateDevice(flowState.username);
-  ig.state.proxyUrl = process.env.IG_PROXY || '';
+  const ig = createInstagramClient(flowState.username);
   await ig.state.deserialize(flowState.igState);
+  applyIgRuntimeConfig(ig);
 
   try {
     // Complete session setup (21 API calls).

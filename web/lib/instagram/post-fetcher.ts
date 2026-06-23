@@ -2,6 +2,7 @@ import * as requestPromise from 'request-promise';
 import { IgApiClient } from 'instagram-private-api';
 import { SessionData, DashboardPost, WebSession } from './types';
 import { extractPostsFromProfileHtml } from './post-extractor';
+import { applyIgRuntimeConfig } from './client';
 import { ClientMessageError } from './errors';
 
 const WEB_USER_AGENT =
@@ -46,12 +47,8 @@ async function fetchUserPostsFromIgState(
   userId: string,
 ): Promise<DashboardPost[]> {
   const ig = new IgApiClient();
-  ig.state.proxyUrl = process.env.IG_PROXY || '';
   await ig.state.deserialize(igState);
-
-  // Patch constants to a 2025-era Instagram Android version.
-  // The npm package ships with v222 which is rejected.
-  patchIgConstants(ig);
+  applyIgRuntimeConfig(ig);
 
   const feed = ig.feed.user(userId);
   const items = await feed.items();
@@ -108,17 +105,6 @@ async function fetchUserPostsFromWebApi(
   return items.slice(0, 12).map(toDashboardPostFromFeed);
 }
 
-/**
- * Runtime patch for outdated instagram-private-api constants.
- * The npm package v1.46.1 uses APP_VERSION 222.0.0.13.114
- * which Instagram rejects with "useragent mismatch".
- */
-function patchIgConstants(ig: IgApiClient) {
-  const c = ig.state.constants as Record<string, string>;
-  c.APP_VERSION = '350.1.0.42.92';
-  c.APP_VERSION_CODE = '389531634';
-  c.SIGNATURE_KEY = 'b03e0daaf422f5c2b05825e67a0bace5b99e62a55738b80c19e2215cd12bb655';
-}
 
 async function fetchUserPostsFromWebHtml(
   web: WebSession,
