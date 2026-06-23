@@ -1,0 +1,16 @@
+{
+  "functions": {
+    "app/api/instagram/login/route.ts": {
+      "maxDuration": 60
+    },
+    "app/api/instagram/login/complete/route.ts": {
+      "maxDuration": 120
+    },
+    "app/api/instagram/verify/route.ts": {
+      "maxDuration": 60
+    },
+    "app/api/dashboard/posts/route.ts": {
+      "maxDuration": 60
+    }
+  }
+}

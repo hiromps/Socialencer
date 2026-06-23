@@ -1,0 +1,9 @@
+node_modules/
+.next/
+dist/
+*.log
+.env.local
+.env
+dev-server-*.out.log
+dev-server-*.err.log
+.socialencer-*.png

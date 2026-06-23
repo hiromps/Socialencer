@@ -1,0 +1,253 @@
+.dashboard {
+  display: grid;
+  gap: 22px;
+  padding: clamp(20px, 4vw, 42px);
+}
+
+.profileBand {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 22px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 28px;
+}
+
+.avatar {
+  display: grid;
+  width: 96px;
+  height: 96px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d82972, #f59f00 55%, #2563eb);
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.identity {
+  min-width: 0;
+}
+
+.identity h2 {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+.handle {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.bio {
+  max-width: 720px;
+  margin: 14px 0 0;
+  color: #30343b;
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.badge {
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 680;
+  padding: 0 10px;
+}
+
+.badgeGreen {
+  border-color: rgba(17, 122, 66, 0.24);
+  color: var(--green);
+}
+
+.quickLink {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 750;
+  padding: 0 16px;
+  text-decoration: none;
+}
+
+.quickLink:hover {
+  background: var(--accent-strong);
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.metric {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  padding: 18px;
+}
+
+.metric span {
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 680;
+}
+
+.metric strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 1.35rem;
+}
+
+.detailPanel {
+  display: grid;
+  gap: 12px;
+  max-width: 760px;
+}
+
+.detailRow {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 18px;
+  border-top: 1px solid var(--line);
+  padding: 14px 0;
+}
+
+.detailRow span {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.detailRow strong {
+  overflow-wrap: anywhere;
+}
+
+.postsSection {
+  display: grid;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.postsHeader {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.postsSection h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.postsHeader p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.postsState {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--muted);
+  padding: 18px;
+}
+
+.postsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.postItem {
+  position: relative;
+  display: block;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #e0e3da;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.postItem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.postOverlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: end;
+  gap: 8px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.72));
+  color: #fff;
+  font-size: 0.88rem;
+  opacity: 0;
+  padding: 12px;
+  transition: opacity 140ms ease;
+}
+
+.postItem:hover .postOverlay,
+.postItem:focus-visible .postOverlay {
+  opacity: 1;
+}
+
+.postCounts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-weight: 720;
+}
+
+.postCaption {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-height: 1.35;
+}
+
+@media (max-width: 640px) {
+  .postsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .profileBand {
+    grid-template-columns: 1fr;
+  }
+  .metrics {
+    grid-template-columns: 1fr;
+  }
+  .detailRow {
+    grid-template-columns: 1fr;
+  }
+}
