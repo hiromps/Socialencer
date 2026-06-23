@@ -47,8 +47,17 @@ export function handleLoginError(error: unknown): NextResponse {
   }
 
   if (error instanceof IgLoginBadPasswordError) {
+    const instagramMessage = error.response.body?.message || '';
+    const message = instagramMessage.toLowerCase().includes('email')
+      ? 'Instagram rejected this login and offered account recovery. The password may be correct, but the server login source is being treated as suspicious. Try approving the login in Instagram, wait a few minutes, or configure IG_PROXY with a residential proxy close to the account location.'
+      : 'Incorrect password.';
+
     return NextResponse.json(
-      { message: 'Incorrect password.' },
+      {
+        message,
+        instagramMessage: instagramMessage || undefined,
+        errorType: error.response.body?.error_type,
+      },
       { status: 401 },
     );
   }
